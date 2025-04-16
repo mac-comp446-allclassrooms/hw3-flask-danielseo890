@@ -66,7 +66,6 @@ class Database:
 
 db_manager = Database()  # Create a database manager instance
 
-# Initialize database with sample data
 @app.before_request
 def setup():
     with app.app_context():
@@ -75,7 +74,6 @@ def setup():
             db_manager.create("Mr. Pumpkin Man", "This is a pretty bad movie", 4)
             print("Database initialized with sample data!")
 
-# Reset the database
 @app.route('/reset-db', methods=['GET', 'POST'])
 def reset_db():
     with app.app_context():
@@ -134,8 +132,7 @@ def delete_review(review_id):
     db_manager.delete(review_id)
     return redirect(url_for('show_all_reviews'))
   
-# RUN THE FLASK APP
 if __name__ == "__main__":
     with app.app_context():
-        db.create_all()  # Ensure DB is created before running the app
+        db.create_all() 
     app.run(debug=True)
