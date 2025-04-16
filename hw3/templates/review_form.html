@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}{% if review %}Edit Review{% else %}Create New Review{% endif %}{% endblock %}
+
+{% block content %}
+    <h2>{% if review %}Edit Review{% else %}Create New Review{% endif %}</h2>
+    
+    <form method="POST">
+        <div class="form-group">
+            <label for="title">Movie Title</label>
+            <input type="text" id="title" name="title" value="{{ review.title if review else '' }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="text">Review</label>
+            <textarea id="text" name="text" required>{{ review.text if review else '' }}</textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="rating">Rating</label>
+            <select id="rating" name="rating" required>
+                <option value="">Select a rating</option>
+                {% for i in range(1, 6) %}
+                    <option value="{{ i }}" {% if review and review.rating == i %}selected{% endif %}>{{ i }} Star{% if i != 1 %}s{% endif %}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="actions">
+            <button type="submit" class="btn btn-success">{% if review %}Update Review{% else %}Create Review{% endif %}</button>
+            <a href="{{ url_for('show_all_reviews') }}" class="btn">Cancel</a>
+        </div>
+    </form>
+{% endblock %} 
